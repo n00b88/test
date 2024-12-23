@@ -1,0 +1,24 @@
+name: CD
+
+on:
+  # enables manual triggers
+  workflow_dispatch:
+
+jobs:
+  deploy-dev:
+    name: Deploy to development
+    runs-on: ubuntu-latest
+    environment: development
+    # These permissions are needed to interact with GitHub's OIDC Token endpoint.
+    steps:
+      - name: Deploy Artifact
+        run: echo "Deployed to development environment"
+
+  deploy-test:
+    name: Deploy to test
+    runs-on: ubuntu-latest
+    needs: deploy-dev
+    environment: test
+    steps:
+      - name: Deploy Artifact
+        run: echo "Deployed to test environment"
